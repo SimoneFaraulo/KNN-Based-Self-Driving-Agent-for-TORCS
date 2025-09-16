@@ -21,61 +21,56 @@ The approach follows **behavioral cloning**, where the agent learns from human d
 
 ---
 
-## Modes of Operation 🎮
+## Usage 🖥️
 
-**Manual Driving**  
-Control the car manually via keyboard. During this mode, you can record race data into `dataset.csv` for training.
+1. Open the terminal and the **Torcs** application.
+2. Move into the `src` folder where the client source code is located and compile it using:
 
-**Autonomous Driving**  
-The KNN-based agent drives autonomously using the pre-collected dataset.
+   ```bash
+   javac -d ../classes src/*.java
+   ```
+
+3. After compilation, start a new race from the Torcs application, ensuring that the race player is configured as `scr_server 1`.
+4. Once the race has started (Torcs will wait for a client connection), move into the `classes` folder from the terminal and run the client with:
+
+   ```bash
+   java scr.Client scr.SimpleDriver host:localhost port:3001 verbose on
+   ```
+
+5. From the terminal, choose the execution mode:
+
+   - **Manual Driving**  
+     Enter the character `m` and press Enter.  
+     Use `w` to accelerate, `a` to steer left, `d` to steer right, and `s` to brake or reverse.  
+     To start recording race data into `dataset.csv`, press `q` in the JFrame that appears on screen.  
+     To stop recording, press `e`.
+
+   - **Autonomous Driving**  
+     Enter the character `a` and press Enter.  
+     The car will drive autonomously using the data in `dataset.csv`.
 
 ---
 
-## Dataset Format 📊
+## Dataset 📊
 
-The dataset must be named `dataset.csv` and structured as follows:
+If you want to replace the dataset with an existing one for testing:
+
+1. Go to the `classes` folder.
+2. Delete the existing `dataset.csv`.
+3. Place your new CSV dataset in the same folder and rename it to `dataset.csv`.
+
+The dataset must follow this format:
 
 ```csv
-speed,angle,distance_from_center,steering,acceleration,brake
-123.4,0.02,0.1,-0.05,1.0,0.0
-125.1,0.01,0.0,0.00,0.9,0.0
-119.8,-0.03,-0.2,0.07,0.8,0.1
+"ANGLE_SENS(Double);GEAR_SENS(Int);RPM_SENS(Double);SPEEDX_SENS(Double);SPEEDY_SENS(Double);SPEEDZ_SENS(Double);TRACK_SENS(Double[]);TRACK_POS_SENS(Double);ACCEL_ACT(Double);BRAKE_ACT(Double);CLUTCH_ACT(Double);GEAR_ACT(Int);STEERING_ACT(Double)"
 ```
-
-You can replace the dataset with a new one, provided it matches this format.
-
----
-
-## Installation & Usage 🖥️
-
-1. Launch TORCS and configure the race with `scr_server 1` as the race player.
-2. Compile the client source code:
-
-```bash
-cd code
-javac -d bin src/*.java
-```
-
-3. Start a race in TORCS, then run the client:
-
-```bash
-java -cp bin MainClient
-```
-
-4. Select the execution mode:
-   - `m` → Manual driving
-   - `a` → Autonomous driving (KNN classifier)
-
-**During manual mode logging:**
-- Press `q` in the JFrame to start recording
-- Press `e` to stop recording
 
 ---
 
 ## Recommendations for Testing 🧪
 
-- Use a plugged-in computer to ensure stable performance.
-- Close unnecessary background applications (e.g., browsers) to prevent slowdowns affecting KNN execution.
+- Use a plugged-in computer to ensure maximum performance and avoid slowdowns.
+- Close unnecessary background applications (e.g., browsers), as they may reduce the performance of the KNN algorithm and affect lap completion times.
 
 ---
 
